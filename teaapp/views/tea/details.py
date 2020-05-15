@@ -24,15 +24,19 @@ def get_tea(tea_id):
         WHERE t.id = ?
         """, (tea_id,))
 
-        # return db_cursor.fetchone()
-
-        # tea_packagings = db_cursor.fetchall()
-        # tea = Tea()
-        # tea.package_methods = []
-
         all_teas = db_cursor.fetchall()
         
-        for row in dataset:
+        tea_groups = {}
+        tea_groups_values = tea_groups.values()
+
+        for (tea, packaging) in all_teas:
+            if tea.id not in tea_groups:
+                tea_groups[tea.id] = tea
+                tea_groups[tea.id].packaging_methods.append(packaging)
+            else:
+                tea_groups[tea.id].packaging_methods.append(packaging)
+        
+        return tea_groups_values
 
 
 def create_tea(cursor, row):
@@ -42,27 +46,22 @@ def create_tea(cursor, row):
     tea.id = _row['id']
     tea.name = _row['tea_name']
     tea.flavor = _row['flavor']
-    # tea.packaging_name = _row['packaging_method']
     tea.packaging_longevity = _row['longevity_in_months']
     
-    tea.packages = []
+    tea.packaging_methods = []
 
     packaging = Packaging()
     packaging.name = _row['packaging_method']
 
-    # tea_packaging = TeaPackaging()
-    # tea_packaging.longevity = _row['longevity_in_months']
-
-    # , tea_packaging
     return(tea, packaging)
 
 def tea_details(request, tea_id):
     if request.method == 'GET':
-        tea = get_tea(tea_id)
+        tea_values = get_tea(tea_id)
 
         template = 'tea/details.html'
         context = {
-            'tea': tea
+            'tea_values': tea_values
         }
     
     return render(request, template, context)
