@@ -2,7 +2,7 @@
 
 {% block content %}
 <section class="list-container">
-    <form action="{% url 'hrapp:tea_list' %}" method="post">
+    <form action="{% url 'teaapp:tea_list' %}" method="post">
         {% csrf_token %}
         <fieldset>
             <label>Tea Name: </label>

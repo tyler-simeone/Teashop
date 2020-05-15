@@ -3,6 +3,8 @@
 {% block content %}
 <div class="page-header">Teas</div>
 
+<a href="{% url 'teaapp:tea_form' %}"><button>Add Tea</button></a>
+
 <section class="list-container">
     <ul>
         {% for tea in all_teas %}
