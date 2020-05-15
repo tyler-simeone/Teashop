@@ -10,7 +10,7 @@ def tea_list(request):
             db_cursor = conn.cursor()
 
             db_cursor.execute("""
-            SELECT * FROM teaapp_table
+            SELECT * FROM teaapp_tea
             ORDER BY name
             """)
 

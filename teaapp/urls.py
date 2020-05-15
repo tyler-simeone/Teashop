@@ -4,7 +4,7 @@ from .views import *
 
 app_name = "teaapp"
 
-urlpatterns = [
-    path('/', tea_list, name="tea_list"),
+urlpatterns = [    
+    path('', tea_list, name="tea_list"),
     # path('/', tea_list, name="tea_list"),
 ]
