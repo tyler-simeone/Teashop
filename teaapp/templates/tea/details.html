@@ -1,6 +1,13 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
+    {% for tea in tea_values %}
     <h1>{{ tea.name }}<h1>
     <h2>{{ tea.flavor }}<h2>
+    <ul>
+        {% for method in tea.packaging_methods %}
+        <li>{{ method.name }}</li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
 {% endblock %}
