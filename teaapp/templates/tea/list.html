@@ -8,9 +8,9 @@
 <section class="list-container">
     <ul>
         {% for tea in all_teas %}
-        {% comment %} <a href="{% url 'teaapp:tea_details' tea.id %}"> {% endcomment %}
+        <a href="{% url 'teaapp:tea_details' tea.id %}">
             <li>{{ tea.name }}</li>
-        {% comment %} </a> {% endcomment %}
+        </a>
         {% endfor %}
     </ul>
 </section>
