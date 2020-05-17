@@ -2,7 +2,11 @@
 
 {% block content %}
 <section class="list-container">
+    {% if tea.id is not None %}
+    <form action="{% url 'teaapp:tea_details' tea.id %}" method="post">
+    {% else %}    
     <form action="{% url 'teaapp:tea_list' %}" method="post">
+    {% endif %}
         {% csrf_token %}
         <fieldset>
             <label>Tea Name: </label>
@@ -13,7 +17,12 @@
             <input id="tea_flavor" type="text" name="flavor">
         </fieldset>
 
-        <input class="tea-button" type="submit">
+        {% if tea.id is not None %}
+        <input type="hidden" name="actual_method" value="PUT" />
+        <input type="submit" value="Update" />
+        {% else %}
+        <input type="submit" value="Create" />
+        {% endif %}
     </form>
 </section>
 {% endblock content %}
