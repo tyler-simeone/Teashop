@@ -9,7 +9,7 @@
         <li>Packaging: {{ method.name }}</li>
         <p>Longevity: {{ method.longevity }} months</p>
 
-        <form action="{% url 'teaapp:tea_details' tea.id %}" method="POST">
+        <form action="{% url 'teaapp:tea_details' method.id %}" method="POST">
             {% csrf_token %}
             <input type="hidden" name="actual_method" value="DELETE" />
             <button>Delete</button>

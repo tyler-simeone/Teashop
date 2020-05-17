@@ -15,7 +15,8 @@ def get_tea(tea_id):
             t.name tea_name,
             t.flavor,
             p.name packaging_method,
-            tp.longevity_in_months
+            tp.longevity_in_months,
+            tp.packaging_id
         FROM teaapp_tea t
         JOIN teaapp_packaging p
         ON p.id = tp.packaging_id
@@ -50,6 +51,7 @@ def create_tea(cursor, row):
     tea.packaging_methods = []
 
     packaging = Packaging()
+    packaging.id = _row['packaging_id']
     packaging.name = _row['packaging_method']
     packaging.longevity = _row['longevity_in_months']
 
@@ -64,4 +66,21 @@ def tea_details(request, tea_id):
             'tea_values': tea_values
         }
     
-    return render(request, template, context)
+        return render(request, template, context)
+
+    elif request.method =='POST':
+        form_data = request.POST
+
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "DELETE"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                DELETE FROM teaapp_teapackaging AS tp
+                WHERE tp.packaging_id = ?
+                """, (tea_id,))
+
+            return redirect(reverse('teaapp:tea_list'))
