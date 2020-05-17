@@ -6,7 +6,8 @@
     <h2>{{ tea.flavor }}<h2>
     <ul>
         {% for method in tea.packaging_methods %}
-        <li>{{ method.name }}</li>
+        <li>Packaging: {{ method.name }}</li>
+        <p>Longevity: {{ method.longevity }} months</p>
         {% endfor %}
     </ul>
     {% endfor %}
