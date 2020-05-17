@@ -96,14 +96,14 @@ def tea_details(request, tea_id):
                 db_cursor = conn.cursor()
 
                 db_cursor.execute("""
-                UPDATE teaapp_tea AS t
-                SET t.name = ?
-                    t.flavor = ?
-                WHERE t.id = ?
+                UPDATE teaapp_tea
+                SET tea_name = ?, 
+                    flavor = ?
+                WHERE id = ?
                 """, 
                 (
-                    tea_id, form_data['name'], 
-                    form_data['flavor']
+                    form_data['name'], form_data['flavor'],
+                    tea_id
                 ))
 
             return redirect(reverse('teaapp:tea_list'))
