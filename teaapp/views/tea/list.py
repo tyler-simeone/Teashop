@@ -11,7 +11,7 @@ def tea_list(request):
 
             db_cursor.execute("""
             SELECT * FROM teaapp_tea
-            ORDER BY name
+            ORDER BY tea_name
             """)
 
             all_teas = []
@@ -20,7 +20,7 @@ def tea_list(request):
             for row in dataset:
                 tea = Tea()
                 tea.id = row['id']
-                tea.name = row['name']
+                tea.name = row['tea_name']
                 tea.flavor = row['flavor']
 
                 all_teas.append(tea)
@@ -40,7 +40,7 @@ def tea_list(request):
 
             db_cursor.execute("""
             INSERT INTO teaapp_tea
-            (name, flavor)
+            (tea_name, flavor)
             VALUES (?, ?)
             """,
             (form_data['name'], form_data['flavor']))

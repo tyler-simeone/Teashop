@@ -12,7 +12,7 @@ def get_tea(tea_id):
         db_cursor.execute("""
         SELECT
             t.id,
-            t.name tea_name,
+            t.tea_name,
             t.flavor,
             p.name packaging_method,
             tp.longevity_in_months,
@@ -82,5 +82,28 @@ def tea_details(request, tea_id):
                 DELETE FROM teaapp_teapackaging AS tp
                 WHERE tp.packaging_id = ?
                 """, (tea_id,))
+
+            return redirect(reverse('teaapp:tea_list'))
+
+    elif request.method =='POST':
+        form_data = request.POST
+
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                UPDATE teaapp_tea
+                SET tea_name = ?, 
+                    flavor = ?
+                WHERE id = ?
+                """, 
+                (
+                    form_data['name'], form_data['flavor'],
+                    tea_id
+                ))
 
             return redirect(reverse('teaapp:tea_list'))
