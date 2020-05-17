@@ -46,12 +46,12 @@ def create_tea(cursor, row):
     tea.id = _row['id']
     tea.name = _row['tea_name']
     tea.flavor = _row['flavor']
-    tea.packaging_longevity = _row['longevity_in_months']
     
     tea.packaging_methods = []
 
     packaging = Packaging()
     packaging.name = _row['packaging_method']
+    packaging.longevity = _row['longevity_in_months']
 
     return(tea, packaging)
 
