@@ -9,8 +9,22 @@
     {% endif %}
         {% csrf_token %}
         <fieldset>
+            <label>Tea Name: </label>
+            <input id="tea_name" type="text" name="name">
+        </fieldset>
+        <fieldset>
             <label>Tea Flavor: </label>
             <input id="tea_flavor" type="text" name="flavor">
+        </fieldset>
+        <fieldset>
+            <label>Packaging Method: </label>
+            <select id="packaging" name="packaging">
+            {% for method in all_methods %}
+                <option value="{{ method.id }}">
+                    {{ method.name }}
+                </option>
+            {% endfor %}
+            </select>
         </fieldset>
 
         {% if tea.id is not None %}

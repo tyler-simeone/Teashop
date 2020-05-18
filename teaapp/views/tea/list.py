@@ -1,6 +1,6 @@
 import sqlite3
 from django.shortcuts import render, redirect, reverse
-from teaapp.models import Tea
+from teaapp.models import Tea, Packaging
 from ..connection import Connection
 
 def tea_list(request):
@@ -42,6 +42,16 @@ def tea_list(request):
             INSERT INTO teaapp_tea
             (tea_name, flavor)
             VALUES (?, ?)
+            """,
+            (form_data['name'], form_data['flavor']))
+
+            db_cursor.execute("""
+            INSERT INTO teaapp_teapackaging
+            (
+                longevity_in_months, packaging_id, 
+                tea_id
+            )
+            VALUES (?, ?, ?)
             """,
             (form_data['name'], form_data['flavor']))
 
