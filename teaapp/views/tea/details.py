@@ -18,10 +18,10 @@ def get_tea(tea_id):
             tp.longevity_in_months,
             tp.packaging_id
         FROM teaapp_tea t
-        JOIN teaapp_packaging p
-        ON p.id = tp.packaging_id
-        JOIN teaapp_teapackaging tp
-        ON t.id = tp.tea_id
+        LEFT JOIN teaapp_teapackaging tp
+        ON tp.tea_id = t.id
+        LEFT JOIN teaapp_packaging p
+        ON tp.packaging_id = p.id
         WHERE t.id = ?
         """, (tea_id,))
 
@@ -30,6 +30,8 @@ def get_tea(tea_id):
         tea_groups = {}
         tea_groups_values = tea_groups.values()
 
+        # creating a sub-list for the multiple packaging methods
+        # on each tea
         for (tea, packaging) in all_teas:
             if tea.id not in tea_groups:
                 tea_groups[tea.id] = tea
